@@ -53,7 +53,7 @@ class Hotel{
     public function afficherReservations(){
         $result ="";
 
-        echo "<h2>Réservation de l'hôtel $this->_nom:</h2>";
+        echo "<h2>Réservation de l'hôtel $this:</h2>";
    
  
         usort($this->_reservations, function ($a, $b)
@@ -130,8 +130,8 @@ class Hotel{
             ?>
             <tr>
             <td>Chambre <?= $chambre->getNChambre() ?></td>       
-            <td><?= $chambre->getPrix() ?></td>
-            <td><?= $wifi ?></td>
+            <td align='center'><?= $chambre->getPrix() ?></td>
+            <td align='center'><?= $wifi ?></td>
             <td><?= $reserver ?></td>
             </tr>
             <?php
