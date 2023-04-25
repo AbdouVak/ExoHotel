@@ -50,7 +50,18 @@ class Reservation{
         return self::$counter;
     }
 
+    public function sejour(){
+        $result ="";
+        $difference = $this->getDateFin()->diff($this->getDateDebut());
+        
+        $annees = $difference->format('%y');
+        $mois = $difference->format('%m');
+        $jours = $difference->format('%d');
 
+        $result =  $annees *365 + $mois*60 + $jours;
+        return $result;
+    }
+    
 
 }
 ?>
