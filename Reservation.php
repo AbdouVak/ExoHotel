@@ -4,6 +4,7 @@ class Reservation{
     private Client $_client;
     private DateTime $_dateDebut;
     private DateTime $_dateFin;
+    public static $counter = 0;
 
     public function __construct(Client $client,Chambre $nChambre,string $dateDebut,string $dateFin){
         $this->_client = $client;
@@ -13,12 +14,14 @@ class Reservation{
 
         $this->_client->addReservation($this);
         $this->_nChambre->addReservation($this);
+        $this->_nChambre->setReserver(true);
+        self::$counter++;
     }
 
-    public function getNbChambre(){
+    public function getNChambre(){
         return $this->_nChambre;
     }
-    public function setNbChambre($nChambre){
+    public function setNChambre($nChambre){
         $this->_nChambre = $nChambre;
     }
 
@@ -42,6 +45,11 @@ class Reservation{
     public function seDateFin($dateFin){
         $this->_dateFin = $dateFin;
     }
+
+    public function getNbrReservation(){
+        return self::$counter;
+    }
+
 
 
 }
