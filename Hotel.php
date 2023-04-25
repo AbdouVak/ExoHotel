@@ -21,7 +21,7 @@ class Hotel{
         $this->_chambres = [];
     }
 
-    /*-----------------------------------Getter et Setter-----------------------------------*/
+    /*-----------------------------------Getter et Stter-----------------------------------*/
     public function getNom() :string{
         return $this->_nom;
     }    
@@ -54,11 +54,12 @@ class Hotel{
     /*-----------------------------------Affiche le nombre les reservation-----------------------------------*/
     public function afficherReservations(){
         $result ="";
-        $NbrReservation="";
-        echo "<h2>Réservation de l'hôtel $this->_nom:</h2><br>";
+        $NbrReservation=0;
+        echo "<h2>Réservation de l'hôtel $this->_nom:</h2>";
 
         foreach($this->_chambres as $chambre){   
             foreach($chambre->getReservation() as $reservation){
+
                 
                 $result .= $reservation->getClient().
                         " - Chambre ".$reservation->getNChambre()->getNChambre().
@@ -67,11 +68,16 @@ class Hotel{
                 
                 $NbrReservation = $reservation->getNbrReservation();
                 $this->_nbChambreDispo = $this->_nbChambre-$NbrReservation;
+                }
             }
+            if($NbrReservation==0){
+                return " Aucune réservation !";
+            }else{
+                return $result = $NbrReservation." RÉSERVATION<br>".$result."<br>";
+            }            
         }
+        
 
-        return $result = $NbrReservation." RÉSERVATION<br>".$result."<br>";
-    }
 
     /*-----------------------------------Affiche le nombre de chambre réserver-----------------------------------*/
     public function NbrChambreReserver(){
@@ -98,6 +104,10 @@ class Hotel{
                 "Nombre de dispo : ".$this->NbrChambreReserver()."<br>".
                 "Nombre de chambres : ".$this->_nbChambreDispo -  $this->NbrChambreReserver() ."<br>";
 
+    }
+
+    public function statusChambre(){
+        
     }
 
     public function __toString(){
