@@ -4,20 +4,15 @@ class Hotel{
     private string $_nom;
     private array $_address;
     private int $_nbEtoile;
-    private int $_nbChambre;
-    private int $_nbChambreDispo;    
-    private int $_nbChambreReserver;
     private array $_chambres;
+    private array $_reservations;
 
 
-    public function __construct(string $nom,array $address,int $nbEtoile,int $nbChambre){
+    public function __construct(string $nom,array $address,int $nbEtoile){
         $this->_nom = $nom;
         $this->_address = $address;
         $this->_nbEtoile= $nbEtoile;
-        $this->_nbChambre = $nbChambre;
-        $this->_nbChambreDispo = $nbChambre;        
-        $this->_nbChambreReserver = $nbChambre;
-        
+        $this->_reservations = [];
         $this->_chambres = [];
     }
 
@@ -39,73 +34,92 @@ class Hotel{
     public function getNbEtoile():int{
         return $this->_nbEtoile;
     }    
-    public function SetNbnbEtoile($nbEtoile) {
+    public function SetNbEtoile($nbEtoile) {
         $this->_nbEtoile = $nbEtoile;
     }
 
-    public function getNbChambre():int{
-        return $this->_nbChambre;
-    }    
-
     public function addChambres(Chambre $chambre){
         $this->_chambres[] = $chambre;
+        
+    }    
+    public function getReservation(){
+        return $this->_reservations;
+    }
+    public function addReservation(Reservation $reservation){
+        $this->_reservations[] = $reservation;
     }
 
     /*-----------------------------------Affiche le nombre les reservation-----------------------------------*/
     public function afficherReservations(){
         $result ="";
-        $NbrReservation=0;
+
         echo "<h2>Réservation de l'hôtel $this->_nom:</h2>";
-
-        usort($this->_chambres, function ($a, $b)
-            {
-                return (int) ($a->getReservation()->getDateDebut() > $b->getReservation()->getDateDebut());
-            } );
+   
+ 
+        usort($this->_reservations, function ($a, $b)
+        {
             
-        foreach($this->_chambres as $chambre){   
-            foreach($chambre->getReservation() as $reservation){
-                $result .= $reservation->getClient().
-                        " - Chambre ".$reservation->getNChambre()->getNChambre().
-                        " - du ".$reservation->getDateDebut()->format("d-m-Y").
-                        " - au ".$reservation->getDateFin()->format("d-m-Y")."<br>";
-                
-                $NbrReservation = $reservation->getNbrReservation();
-                $this->_nbChambreDispo = $this->_nbChambre-$NbrReservation;
-                }
-            }
-            if($NbrReservation==0){
-                return " Aucune réservation !";
-            }else{
-                return $result = $NbrReservation." RÉSERVATION<br>".$result."<br>";
-            }            
-        }
-        
+            return (int) ($a->getDateDebut() > $b->getDateDebut());  
 
+        } );
+
+        foreach($this->_reservations as $reservation){
+            
+            $result .= $reservation->getClient().
+                    " - Chambre ".$reservation->getNChambre()->getNChambre().
+                    " - du ".$reservation->getDateDebut()->format("d-m-Y").
+                    " - au ".$reservation->getDateFin()->format("d-m-Y")."<br>";
+                
+        }
+            
+        if($reservation->getNbrReservation()==0){
+            return " Aucune réservation !";
+        }else{
+            return $result = $this->NbrChambreReserver()." RÉSERVATION<br>".$result."<br>";
+        }    
+
+    }
 
     /*-----------------------------------Affiche le nombre de chambre réserver-----------------------------------*/
-    public function NbrChambreReserver(){
+    private function NbrChambreReserver(){
+        $chambreReserver ="";
         foreach($this->_chambres as $chambre){   
             foreach($chambre->getReservation() as $reservation){
-                
-                $NbrReservation = $reservation->getNbrReservation();
 
-                $this->_nbChambreReserver = $this->_nbChambre-$NbrReservation;
+                $chambreReserver = $chambre->getNbrChambre()-$reservation->getNbrReservation();
             }
         }
-        return  $this->_nbChambreReserver;
+        return  $chambreReserver;
     }
+
+    private function NbrChambreDispo(){
+        $chambreDispo ="";
+        foreach($this->_chambres as $chambre){   
+            $chambreDispo = $chambre->getNbrChambre()-$this->NbrChambreReserver();
+        }
+        return  $chambreDispo;
+    }
+
+    private function NbrChambre(){
+        $nbrChambre ="";
+        foreach($this->_chambres as $chambre){   
+            $nbrChambre = $chambre->getNbrChambre();
+        }
+        return  $nbrChambre;
+    }
+
 
     /*-----------------------------------Affiche les infos de l'hotel-----------------------------------*/
     public function afficherInfos(){
-        $afficherEtoile ="";
-        for($i=0;$i<$this->_nbEtoile;$i++){
-            $afficherEtoile .= "*";
-        }
-        return "<h2>".$this->_nom." ".$afficherEtoile." ".$this->_address[3]."</h2>".
-                $this->_address[0]." ".$this->_address[1]." ".$this->_address[2]." ".$this->_address[3]."<br>".
-                "Nombre de chambres : $this->_nbChambre <br>".
-                "Nombre de dispo : ".$this->NbrChambreReserver()."<br>".
-                "Nombre de chambres : ".$this->_nbChambreDispo -  $this->NbrChambreReserver() ."<br>";
+         $afficherEtoile ="";
+         for($i=0;$i<$this->_nbEtoile;$i++){
+             $afficherEtoile .= "*";
+         }
+         return "<h2>".$this->_nom." ".$afficherEtoile." ".$this->_address[3]."</h2>".
+                 $this->_address[0]." ".$this->_address[1]." ".$this->_address[2]." ".$this->_address[3]."<br>".
+                 "Nombre de chambres : ".$this->NbrChambre() ." <br>".
+                 "Nombre de chambres réservées : ".$this->NbrChambreReserver()."<br>".
+                 "Nombre de chambres dispo : ".$this->NbrChambreDispo() -  $this->NbrChambreReserver() ."<br>";
 
     }
     
