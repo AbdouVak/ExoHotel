@@ -1,6 +1,6 @@
 <?PHP
 class Reservation{
-    private Chambre $_nChambre;
+    private Chambre $_Chambre;
     private Client $_client;
     private DateTime $_dateDebut;
     private DateTime $_dateFin;
@@ -8,21 +8,22 @@ class Reservation{
 
     public function __construct(Client $client,Chambre $nChambre,string $dateDebut,string $dateFin){
         $this->_client = $client;
-        $this->_nChambre = $nChambre;
+        $this->_Chambre = $nChambre;
         $this->_dateDebut = new DateTime($dateDebut);
         $this->_dateFin = new DateTime($dateFin);
 
         $this->_client->addReservation($this);
-        $this->_nChambre->addReservation($this);
-        $this->_nChambre->setReserver(true);
+        $this->_Chambre->setReserver(true);
+        $this->_Chambre->addReservation($this);
+        $this->_Chambre->getHotel()->addReservation($this);
         self::$counter++;
     }
 
     public function getNChambre(){
-        return $this->_nChambre;
+        return $this->_Chambre;
     }
     public function setNChambre($nChambre){
-        $this->_nChambre = $nChambre;
+        $this->_Chambre = $nChambre;
     }
 
     public function getClient(){
