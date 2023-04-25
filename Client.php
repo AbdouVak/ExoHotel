@@ -23,16 +23,19 @@ class Client{
     /*-----------------------------------Affiche le nombre les chambres réserver-----------------------------------*/
     public function afficherReservation(){
         $NbrChambre ="";
+        $prixTotal =0;
         $result ="";
         echo "<h2>Réservation de $this->_nom:</h2>";
 
         foreach($this->_reservation as $reservation){
             $result .= "Hotel: ".$reservation->getNChambre()->getHotel()."/ ".$reservation->getNChambre()." du ".$reservation->getDateDebut()->format("d-m-Y")." au ".$reservation->getDateFin()->format("d-m-Y")."<br>";
-            $NbrChambre = $reservation->getNbrReservation();
+            $prixTotal = $prixTotal + $reservation->getNChambre()->getPrix()*intval($reservation->sejour());
+            $NbrChambre++;
         }
-        return $result = $NbrChambre." RÉSERVATION<br>".$result."<br>";
+        return $result = $NbrChambre." RÉSERVATION<br>".$result." Total: ".$prixTotal." €";
     }
 
+    
     public function __toString(){
         return $this->_nom;
     }
