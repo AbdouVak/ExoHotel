@@ -108,7 +108,7 @@ class Hotel{
                   $this->_addresse."<br>".
                  "Nombre de chambres : ".$this->NbrChambre() ." <br>".
                  "Nombre de chambres réservées : ".$this->NbrChambreReserver()."<br>".
-                 "Nombre de chambres dispo : ".$this->NbrChambreDispo() -  $this->NbrChambreReserver() ."<br>";
+                 "Nombre de chambres dispo : ".$this->NbrChambreDispo()."<br>";
 
     }
     
@@ -121,9 +121,8 @@ class Hotel{
         <th align='left'>PRIX</th>
         <th align='left'>WIFI</th>
         <th align='left'>ETAT</th>
-       
-        <?php 
 
+        <?php 
         echo "<h2>Statuts des chambres de $this </h2>";
         foreach($this->_chambres as $chambre){
             $wifi = ($chambre->getWifi()) ? "📶" : "";
@@ -136,11 +135,8 @@ class Hotel{
             <td><?= $reserver ?></td>
             </tr>
             <?php
-
         }
-
-        ?>
-        
+        ?>  
         </table>
         <?php
     }
