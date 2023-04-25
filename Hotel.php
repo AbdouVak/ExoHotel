@@ -2,15 +2,15 @@
 class Hotel{
     
     private string $_nom;
-    private array $_address;
+    private string $_addresse;
     private int $_nbEtoile;
     private array $_chambres;
     private array $_reservations;
 
 
-    public function __construct(string $nom,array $address,int $nbEtoile){
+    public function __construct(string $nom,string $addresse,int $nbEtoile){
         $this->_nom = $nom;
-        $this->_address = $address;
+        $this->_addresse = $addresse;
         $this->_nbEtoile= $nbEtoile;
         $this->_reservations = [];
         $this->_chambres = [];
@@ -24,11 +24,11 @@ class Hotel{
         $this->_nom = $nom;
     }
     
-    public function getAddress():array{
-        return $this->_address;
+    public function getAddress():string{
+        return $this->_addresse;
     }    
     public function setRealisateur($address){
-        $this->_address = $address;
+        $this->_addresse = $address;
     }
 
     public function getNbEtoile():int{
@@ -72,10 +72,11 @@ class Hotel{
                 
         }
             
-        if($reservation->getNbrReservation()==0){
-            return " Aucune réservation !";
-        }else{
+        if($this->NbrChambreReserver()>0){
             return $result = $this->NbrChambreReserver()." RÉSERVATION<br>".$result."<br>";
+            
+        }else{
+            return " Aucune réservation !";
         }    
 
     }
@@ -93,30 +94,18 @@ class Hotel{
     }
 
     private function NbrChambreDispo(){
-        $chambreDispo ="";
-        foreach($this->_chambres as $chambre){   
-            $chambreDispo = $chambre->getNbrChambre()-$this->NbrChambreReserver();
-        }
-        return  $chambreDispo;
+        return   $this->NbrChambre()- $this->NbrChambreReserver() ;
     }
 
     private function NbrChambre(){
-        $nbrChambre ="";
-        foreach($this->_chambres as $chambre){   
-            $nbrChambre = $chambre->getNbrChambre();
-        }
-        return  $nbrChambre;
+        return count($this->_chambres);
     }
 
 
     /*-----------------------------------Affiche les infos de l'hotel-----------------------------------*/
     public function afficherInfos(){
-         $afficherEtoile ="";
-         for($i=0;$i<$this->_nbEtoile;$i++){
-             $afficherEtoile .= "*";
-         }
-         return "<h2>".$this->_nom." ".$afficherEtoile." ".$this->_address[3]."</h2>".
-                 $this->_address[0]." ".$this->_address[1]." ".$this->_address[2]." ".$this->_address[3]."<br>".
+         return "<h2>$this</h2>".
+                  $this->_addresse."<br>".
                  "Nombre de chambres : ".$this->NbrChambre() ." <br>".
                  "Nombre de chambres réservées : ".$this->NbrChambreReserver()."<br>".
                  "Nombre de chambres dispo : ".$this->NbrChambreDispo() -  $this->NbrChambreReserver() ."<br>";
@@ -125,14 +114,17 @@ class Hotel{
     
     /*-----------------------------------Affiche le statues des chambres-----------------------------------*/
     public function displayStatusChambre(){
-       
+  
         ?>
         <table border='1px'>
         <th align='left'>CHAMBRE</th> 
         <th align='left'>PRIX</th>
         <th align='left'>WIFI</th>
         <th align='left'>ETAT</th>
-        <?php
+       
+        <?php 
+
+        echo "<h2>Statuts des chambres de $this </h2>";
         foreach($this->_chambres as $chambre){
             $wifi = ($chambre->getWifi()) ? "📶" : "";
             $reserver = ($chambre->getReserver()) ? "DISPONIBLE" : "RÉSERVÉE";
@@ -148,16 +140,18 @@ class Hotel{
         }
 
         ?>
+        
         </table>
         <?php
     }
 
     public function __toString(){
+        $ville = explode(" ", $this->_addresse);
         $afficherEtoile ="";
         for($i=0;$i<$this->_nbEtoile;$i++){
             $afficherEtoile .= "*";
         }
-        return $this->_nom." ".$afficherEtoile." ".$this->_address[3];
+        return $this->_nom." ".$afficherEtoile." ".$ville[count($ville)-1];
     }
 }
 ?>
