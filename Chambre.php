@@ -4,8 +4,8 @@ class Chambre{
     private Hotel $_hotel;
     private int $_lits;
     private int $_prix;
-    private bool $_is_wifi;
-    private bool $_is_reserver = false;
+    private bool $_isWifi;
+    private bool $_isReserver = false;
     private array $_reservation;
     public static $counter = 0;
 
@@ -14,7 +14,7 @@ class Chambre{
         $this->_nChambre = $nChambre;
         $this->_lits = $lits;
         $this->_prix = $prix;
-        $this->_is_wifi = $wifi;
+        $this->_isWifi = $wifi;
         $this->_reservation =[];
 
         $this->_hotel->addChambres($this);
@@ -31,7 +31,7 @@ class Chambre{
     public function getNChambre(){
         return $this->_nChambre;
     }
-    public function seNChambre($nChambre){
+    public function setNChambre($nChambre){
         $this->_nChambre = $nChambre;
     }
 
@@ -50,10 +50,10 @@ class Chambre{
     }
 
     public function getWifi(){
-        return $this->_prix;
+        return $this->_isWifi;
     }
-    public function setWifi($prix){
-        $this->_prix = $prix;
+    public function setWifi($wifi){
+        $this->_isWifi = $wifi;
     }
 
     public function getReservation(){
@@ -68,15 +68,15 @@ class Chambre{
     }
 
     public function getReserver(){
-        return $this->_is_reserver;
+        return $this->_isReserver;
     }
     public function setReserver($true){
-        $this->_is_reserver = $true;
+        $this->_isReserver = $true;
     }
 
     public function __toString(){
         $wifi="";
-        if($this->_is_wifi){
+        if($this->_isWifi){
             $wifi="oui";
         }else{
             $wifi="non";
