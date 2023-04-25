@@ -6,6 +6,7 @@ class Client{
     public function __construct(string $nom){
         $this->_nom = $nom;
         $this->_reservation = [];
+
     }
 
     public function getNom() :string{
@@ -19,13 +20,17 @@ class Client{
         $this->_reservation[] = $reservation;
     }
 
+    /*-----------------------------------Affiche le nombre les chambres réserver-----------------------------------*/
     public function afficherReservation(){
+        $NbrChambre ="";
         $result ="";
-        echo "<h2>Réservation de $this->_nom:</h2><br>";
+        echo "<h2>Réservation de $this->_nom:</h2>";
+
         foreach($this->_reservation as $reservation){
-            $result .= "Hotel: ".$reservation->getNbChambre()->getHotel()."/Chambre".$reservation->getNbChambre()." du ".$reservation->getDateDebut()->format("d-m-Y")." au ".$reservation->getDateFin()->format("d-m-Y")."<br>";
+            $result .= "Hotel: ".$reservation->getNChambre()->getHotel()."/ ".$reservation->getNChambre()." du ".$reservation->getDateDebut()->format("d-m-Y")." au ".$reservation->getDateFin()->format("d-m-Y")."<br>";
+            $NbrChambre = $reservation->getNbrReservation();
         }
-        return $result."<br>";
+        return $result = $NbrChambre." RÉSERVATION<br>".$result."<br>";
     }
 
     public function __toString(){
