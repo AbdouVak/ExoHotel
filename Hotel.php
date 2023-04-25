@@ -57,10 +57,13 @@ class Hotel{
         $NbrReservation=0;
         echo "<h2>Réservation de l'hôtel $this->_nom:</h2>";
 
+        usort($this->_chambres, function ($a, $b)
+            {
+                return (int) ($a->getReservation()->getDateDebut() > $b->getReservation()->getDateDebut());
+            } );
+            
         foreach($this->_chambres as $chambre){   
             foreach($chambre->getReservation() as $reservation){
-
-                
                 $result .= $reservation->getClient().
                         " - Chambre ".$reservation->getNChambre()->getNChambre().
                         " - du ".$reservation->getDateDebut()->format("d-m-Y").
@@ -105,9 +108,34 @@ class Hotel{
                 "Nombre de chambres : ".$this->_nbChambreDispo -  $this->NbrChambreReserver() ."<br>";
 
     }
+    
+    /*-----------------------------------Affiche le statues des chambres-----------------------------------*/
+    public function displayStatusChambre(){
+       
+        ?>
+        <table border='1px'>
+        <th align='left'>CHAMBRE</th> 
+        <th align='left'>PRIX</th>
+        <th align='left'>WIFI</th>
+        <th align='left'>ETAT</th>
+        <?php
+        foreach($this->_chambres as $chambre){
+            $wifi = ($chambre->getWifi()) ? "📶" : "";
+            $reserver = ($chambre->getReserver()) ? "DISPONIBLE" : "RÉSERVÉE";
+            ?>
+            <tr>
+            <td>Chambre <?= $chambre->getNChambre() ?></td>       
+            <td><?= $chambre->getPrix() ?></td>
+            <td><?= $wifi ?></td>
+            <td><?= $reserver ?></td>
+            </tr>
+            <?php
 
-    public function statusChambre(){
-        
+        }
+
+        ?>
+        </table>
+        <?php
     }
 
     public function __toString(){
