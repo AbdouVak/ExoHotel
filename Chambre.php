@@ -5,7 +5,7 @@ class Chambre{
     private int $_lits;
     private int $_prix;
     private bool $_is_wifi;
-    private bool $_reserver = false;
+    private bool $_is_reserver = false;
     private array $_reservation;
     public static $counter = 0;
 
@@ -49,6 +49,13 @@ class Chambre{
         $this->_prix = $prix;
     }
 
+    public function getWifi(){
+        return $this->_prix;
+    }
+    public function setWifi($prix){
+        $this->_prix = $prix;
+    }
+
     public function getReservation(){
         return $this->_reservation;
     }
@@ -61,10 +68,10 @@ class Chambre{
     }
 
     public function getReserver(){
-        return $this->_reserver;
+        return $this->_is_reserver;
     }
     public function setReserver($true){
-        $this->_reserver = $true;
+        $this->_is_reserver = $true;
     }
 
     public function __toString(){
