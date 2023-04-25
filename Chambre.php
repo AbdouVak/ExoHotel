@@ -21,6 +21,13 @@ class Chambre{
         self::$counter++;
     }
 
+    public function getHotel(){
+        return $this->_hotel;
+    }
+    public function setHotel(Hotel $hotel){
+        $this->_hotel = $hotel;
+    }
+
     public function getNChambre(){
         return $this->_nChambre;
     }
@@ -28,11 +35,18 @@ class Chambre{
         $this->_nChambre = $nChambre;
     }
 
-    public function getHotel(){
-        return $this->_hotel;
+    public function getLits(){
+        return $this->_lits;
     }
-    public function setHotel(Hotel $hotel){
-        $this->_hotel = $hotel;
+    public function setLits($lits){
+        $this->_lits = $lits;
+    }
+
+    public function getPrix(){
+        return $this->_prix;
+    }
+    public function setPrix($prix){
+        $this->_prix = $prix;
     }
 
     public function getReservation(){
@@ -46,6 +60,9 @@ class Chambre{
         return self::$counter;
     }
 
+    public function getReserver(){
+        return $this->_reserver;
+    }
     public function setReserver($true){
         $this->_reserver = $true;
     }
