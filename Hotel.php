@@ -126,7 +126,7 @@ class Hotel{
         echo "<h2>Statuts des chambres de $this </h2>";
         foreach($this->_chambres as $chambre){
             $wifi = ($chambre->getWifi()) ? "📶" : "";
-            $reserver = ($chambre->getReserver()) ? "DISPONIBLE" : "RÉSERVÉE";
+            $reserver = ($chambre->getReserver()) ? "RÉSERVÉE" : "DISPONIBLE";
             ?>
             <tr>
             <td>Chambre <?= $chambre->getNChambre() ?></td>       
