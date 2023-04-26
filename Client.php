@@ -41,7 +41,7 @@ class Client{
             $prixTotal = $prixTotal + $reservation->getNChambre()->getPrix()*intval($reservation->sejour());
             $NbrChambre++;
         }
-        return $result = $NbrChambre." RÉSERVATION<br>".$result." Total: ".$prixTotal." €";
+        return $result = $NbrChambre." RÉSERVATIONS<br>".$result." Total: ".$prixTotal." €";
     }
 
 

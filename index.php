@@ -1,8 +1,8 @@
-<h1>Exercice Cinema</h1>
+<h1>Exercice Cinéma :</h1>
 
 <p>A partir de ces captures d’écran, réaliser l’application en POO permettant la gestion de réservations de chambres par des clients dans différents hôtels :</p>
 
-<h2>Résultat</h2>
+<h1>Résultat :</h1>
 <style>
 
 td,th {
@@ -25,12 +25,12 @@ include('Reservation.php');
 $Hilton = new Hotel("Hilton","10 route de la Gare 67000 Strasbourg",4);
 $Regent = new Hotel("Regent","7 rue de Paris 93000 Paris",3);
 
-$chambre_1 = new Chambre($Hilton,1,2,120,false);
+$chambre_1 = new Chambre($Hilton,1,1,120,false);
 $chambre_2 = new Chambre($Hilton,2,1,120,false);
-$chambre_3 = new Chambre($Hilton,3,2,120,false);
+$chambre_3 = new Chambre($Hilton,3,1,120,false);
 $chambre_4 = new Chambre($Hilton,4,2,300,true);
-$chambre_5 = new Chambre($Hilton,5,1,300,true);
-$chambre_6 = new Chambre($Hilton,6,1,300,true);
+$chambre_5 = new Chambre($Hilton,5,2,300,true);
+$chambre_6 = new Chambre($Hilton,6,2,300,true);
 
 $GeorgeL = new Client("George LUCAS");
 $LukeS = new Client("Luke SKYWALKER");
