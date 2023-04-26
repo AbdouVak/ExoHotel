@@ -52,10 +52,8 @@ class Hotel{
     /*-----------------------------------Affiche le nombre les reservation-----------------------------------*/
     public function afficherReservations(){
         $result ="";
-
         echo "<h2>Réservation de l'hôtel $this:</h2>";
    
- 
         usort($this->_reservations, function ($a, $b)
         {
             
@@ -73,7 +71,7 @@ class Hotel{
         }
             
         if($this->NbrChambreReserver()>0){
-            return $result = $this->NbrChambreReserver()." RÉSERVATION<br>".$result."<br>";
+            return $result = $this->NbrChambreReserver()." RÉSERVATIONS<br>".$result."<br>";
             
         }else{
             return " Aucune réservation !";
@@ -104,8 +102,12 @@ class Hotel{
 
     /*-----------------------------------Affiche les infos de l'hotel-----------------------------------*/
     public function afficherInfos(){
+        $addresse = explode(" ", $this->_addresse);
+        $addresse = str_replace($addresse[count($addresse)-1],strtoupper($addresse[count($addresse)-1]),$addresse);
+        $addresse = implode(" ", $addresse);
+
          return "<h2>$this</h2>".
-                  $this->_addresse."<br>".
+                  $addresse."<br>".
                  "Nombre de chambres : ".$this->NbrChambre() ." <br>".
                  "Nombre de chambres réservées : ".$this->NbrChambreReserver()."<br>".
                  "Nombre de chambres dispo : ".$this->NbrChambreDispo()."<br>";
@@ -143,6 +145,7 @@ class Hotel{
 
     public function __toString(){
         $ville = explode(" ", $this->_addresse);
+
         $afficherEtoile ="";
         for($i=0;$i<$this->_nbEtoile;$i++){
             $afficherEtoile .= "*";
